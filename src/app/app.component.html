@@ -1,21 +1,10 @@
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a href="/" class="navbar-brand">
       <img width="40" alt="Angular Logo" 
       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="/>
+      Productos
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
-        <li class="nav-item col-6 col-md-auto">
-          <a href="/" class="nav-link p-2">Inicio</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </nav>
 
@@ -25,6 +14,16 @@
       <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title text-center">Lista de productos</h5>
+          <ul class="list-group">
+            <li 
+            *ngFor="let producto of productos"
+            class="list-group-item list-group-item-action"
+            (click)="abrirEditar(producto)"
+            [class.active]="producto == productoSeleccionado">
+              <span class="badge bg-secondary">{{producto.id}}</span>            
+              {{ producto.nombre }} - ${{ producto.precio }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -34,19 +33,20 @@
           <h5 class="card-title text-center">Agregar producto</h5>
           <div class="mb-3">
             <label class="form-label">Nombre del producto</label>
-            <input type="text" class="form-control" placeholder="Ingrese un producto">
+            <input type="text" [(ngModel)]="productoSeleccionado.nombre" class="form-control" placeholder="Ingrese un producto">
           </div>
           <div class="mb-3">
             <label class="form-label">Precio del producto</label>
-            <input type="number" class="form-control" placeholder="0">
+            <input type="number" [(ngModel)]="productoSeleccionado.precio" class="form-control">
           </div>
-          <div class="mb-3">
-            <label class="form-label">Stock</label>
-            <input type="number" class="form-control" placeholder="0">
-          </div>
-          <button type="button" class="btn btn-primary">
-            Guardar
+          <button type="button" (click)="agregarOEditar()" class="btn btn-secondary">
+              Guardar
           </button> 
+          <button type="button" *ngIf="productoSeleccionado.id !== 0" class="btn btn-danger" (click)="eliminar()">
+              Eliminar
+          </button>
+            
+          
         </div>
       </div>
     </div>
